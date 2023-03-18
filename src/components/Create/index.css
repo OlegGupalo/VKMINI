@@ -1,0 +1,12 @@
+.titleQuestion {
+
+}
+
+.answersQuestion {
+    width: 50%;
+}
+
+.correctInput {
+    border-color: 1px solid green;
+    color: white;
+}

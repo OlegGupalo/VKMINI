@@ -1,0 +1,15 @@
+.quesesItem {
+    box-sizing: border-box;
+    padding: 2rem;
+    /* margin-top: 2rem; */
+    background-color: #2c3950   ;
+    text-align: center;
+}
+
+.queseTitle {
+    color: #F7D5B1;
+}
+
+.queseDescription {
+    color: #F7D5B1;
+}
