@@ -15,9 +15,7 @@ const QueseContainerItem = ({
         setStorageAns([...storageAns, e.target.value])
     }
     
-    console.log("answers", option)
-
-    return <FormItem><RadioGroup> <CardGrid size="m" style={{justifyContent: 'center' }}> 
+    return <FormItem><RadioGroup><CardGrid size="m" style={{justifyContent: 'center' }}> 
             <Card mode="shadow" style={{width: '100%', paddingLeft: '2.5rem'}}>
                 <div style={{height: 100, alignItems: 'center', display:'flex', justifyContent: 'center'}}>
                     <Radio name={option} value={option} onChange={handleChangeReply}>

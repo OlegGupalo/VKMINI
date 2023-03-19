@@ -12,7 +12,7 @@ import {
     Title,
     Card
 } from "@vkontakte/vkui"
-import {useState } from "react"
+import {useRef, useState } from "react"
 import { useQuese } from "../../hooks/useQuese"
 import QueseContainerList from './QueseContainerList'
 import bridge from '@vkontakte/vk-bridge';
@@ -33,6 +33,8 @@ const QueseContainer = ({
 
     const [storageAns, setStorageAns] = useState([])
     console.log("storage", storageAns)
+
+    const ref = useRef(null);
 
 
     const shareTest = async () => {
@@ -56,9 +58,13 @@ const QueseContainer = ({
         trueAnswer = docs.questions.map(e => e.answer)
     }
 
-    const endQuiz = () => {
+    const endQuiz = async () => {
         setResultTest(trueAnswer.filter(x => storageAns.includes(x)))
         setEndFulTest(true)
+        setTimeout(
+            () => ref.current?.scrollIntoView({behavior: 'smooth'}),
+            0
+        )
         
     }
     return <Panel id={ids}>
@@ -109,7 +115,7 @@ const QueseContainer = ({
                         <Button size="l" stretched style={{background: 'yellow', color: 'blue'}} onClick={endQuiz}>Закончить</Button>
                     </Div> : <></>}
                 </FormItem>
-                    {endFulTest && <Div style={{
+                    {endFulTest && <Div getRootRef={ref} style={{
                         marginBottom: '3rem',
                         marginTop: '1em',
                     }}>
@@ -124,13 +130,15 @@ const QueseContainer = ({
                             <Title>Поделись своим результатом с друзьями!</Title>
                         <Div>
                             <Button 
-                                before={<Icon16Share onClick={shareTest} />}
+                                before={<Icon16Share />}
+                                onClick={shareTest}
                             >Поделиться</Button>
                         </Div>
                     </Div>
                     }
             </Group></>
-        }
+
+}
     </Panel>
 }
 

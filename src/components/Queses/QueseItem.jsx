@@ -10,6 +10,7 @@ const QuestionItem = ({
     imageUrl,
 }) => {
     const router = useRouter()
+    
     return <CardGrid size="l">
         <Card mode="shadow">
             <ContentCard 
