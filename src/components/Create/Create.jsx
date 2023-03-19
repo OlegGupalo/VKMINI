@@ -4,34 +4,8 @@ import { db } from "../../firebase/config"
 import { useCallback, useState } from "react"
 import './index.css'
 import { InputItemQuest } from "./InputItemQuest"
-
-const quese = {
-    name: '',
-    description: '',
-    questions: [
-        {
-            title: '',
-            answers: [
-                {
-                    answerName: '',
-                    correct: Boolean
-                },
-                {
-                    answerName: '',
-                    correct: Boolean
-                },
-                {
-                    answerName: '',
-                    correct: Boolean
-                },
-                {
-                    answerName: '',
-                    correct: Boolean
-                },
-            ]
-        }
-    ]
-}
+import { useRouter } from "@happysanta/router"
+import { PAGE_MAIN } from "../.."
 
 function isNumber(str) {
     if (str.trim() === '') {
@@ -45,13 +19,15 @@ export const Create = () => {
     const [titleQuese, setTitleQuese] = useState('')
     const [questionCount, setQuestionCount] = useState('')
     const [activeCount, setActiveCount] = useState(false)
+    const router = useRouter()
 
     const [otherQuest, setOtherQuest] = useState([])
-    const onChangeOtherQuest = useCallback((name, value, id, answers) => {
+    const onChangeOtherQuest = (name, value, id) => {
         const newItems = [...otherQuest]
-        newItems[id] = {...newItems[id], [name]: value, answers}
+        console.log("name", {[name]: value})
+        newItems[id] = {...newItems[id], [name]: value}
         setOtherQuest(newItems)
-    }, [])
+    }
 
     const collectionRef = collection(db, 'queses')
     const createQuese = async () => {
@@ -64,6 +40,11 @@ export const Create = () => {
                 createdAt,
             }
             await addDoc(collectionRef, data)
+                .then(() => {
+                    router.pushPage(PAGE_MAIN)
+                }).catch(error => {
+                    console.log(error)
+                })
         }
         
     }
@@ -91,11 +72,12 @@ export const Create = () => {
         }
       };
 
+    const [activeButtonCount, setActiveButtonCount] = useState(true)
     const condition = !(titleQuese.length > 5 && titleQuese.length < 40 && isNumber(questionCount))
     const createTotalQuestions = (e) => {
         setActiveCount(currState => !currState)
+        setActiveButtonCount(currState => !currState)
     }
-    console.log(Array.from({ length: 3 }))
 
     const components = Array.from({ length: Number(questionCount) }).map((_, i) => {
         return <InputItemQuest 
@@ -104,12 +86,12 @@ export const Create = () => {
             otherQuest={otherQuest} 
             setQuestState={item => {
                 setOtherQuest(item)
-                console.log("PARENT", item)
             }} 
             id={i} 
             updateQuest={onChangeOtherQuest} 
         />
       });
+
 
     return <FormLayout>
         <FormItem 
@@ -126,10 +108,19 @@ export const Create = () => {
                     isNumber(questionCount) ? 'It is a valid number' : 'It is NOT a valid number'
                 }
             >
-                <Input className="" type="text" name="questionLength" value={questionCount} onChange={handleChange} />
+                <Input disabled={!activeButtonCount} type="text" name="questionLength" value={questionCount} onChange={handleChange} />
             </FormItem>
             <FormItem>
-                <Button onClick={createTotalQuestions} disabled={!isNumber(questionCount)}>Сохранить</Button>
+                {activeButtonCount && <Button onClick={createTotalQuestions} disabled={!isNumber(questionCount)}>Сохранить</Button>}
+                {!activeButtonCount && <Button 
+                onClick={() => {
+                    setActiveCount(currState => !currState)
+                    setActiveButtonCount(currState => !currState)
+                }}
+                style={{
+                    background: 'red',
+                    color: 'white'
+                }}>Отмена</Button>}
             </FormItem>
         </FormLayoutGroup>
         {activeCount && 

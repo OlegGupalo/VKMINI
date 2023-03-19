@@ -3,7 +3,6 @@ import './index.css'
 import { useState } from "react"
 
 export const AnswersInputs = ({
-    onChangeAnswers = () => {},
     id,
     otherQuest,
     setQuestState = () => {}
@@ -12,11 +11,15 @@ export const AnswersInputs = ({
     const [incorrectInputOne, setIncorrectInputOne] = useState('')
     const [incorrectInputTwo, setIncorrectInputTwo] = useState('')
 
-    const condition = !(correctInput.length > 3 && correctInput.length < 40 || incorrectInputOne.length > 3 && incorrectInputOne.length < 40 || incorrectInputTwo.length > 3 && incorrectInputTwo < 40)
-    console.log("condition", condition) 
-    return <>
+    
+    const condition = !(correctInput.length > 0 && incorrectInputOne.length > 0 && incorrectInputTwo.length > 0)
+
+    const [saveOneTask, setSaveOneTask] = useState(false)
+
+    return (<> 
         <FormItem>
             <Input 
+                disabled={saveOneTask}
                 className="correctInput" 
                 status="valid" 
                 placeholder="Правильный ответ"
@@ -26,6 +29,7 @@ export const AnswersInputs = ({
         </FormItem>
         <FormItem>
             <Input 
+                disabled={saveOneTask}
                 status="error" 
                 placeholder="Непавильный ответ"
                 value={incorrectInputOne}
@@ -34,6 +38,7 @@ export const AnswersInputs = ({
         </FormItem>
         <FormItem>
             <Input 
+                disabled={saveOneTask}
                 status="error" 
                 placeholder="Непавильный ответ"
                 value={incorrectInputTwo}
@@ -41,29 +46,26 @@ export const AnswersInputs = ({
             />
         </FormItem>
         <FormItem>
-            <Button
-            disabled={condition} 
-            onClick={() => {
-                const newItems = [...otherQuest]
-                newItems[id] = {...newItems[id], answers: {
-                    answer1: {
-                        title: correctInput,
-                        correct: true
-                    },
-                    answer2: {
-                        title: incorrectInputOne,
-                        correct: false
-                    },
-                    answer3: {
-                        title: incorrectInputTwo,
-                        correct: false
+            {!saveOneTask && <Button
+                disabled={condition} 
+                onClick={() => {
+                    const newItems = [...otherQuest]
+                    newItems[id] = {...newItems[id], 
+                        options: [correctInput, incorrectInputOne, incorrectInputTwo],
+                        answer: correctInput
                     }
-                }}
-                setQuestState(newItems)
-            }
-            }>
-                Сохранить
-            </Button>
+                    setQuestState(newItems)
+                    setSaveOneTask(currState => !currState)
+                }
+                }>
+                    Сохранить
+            </Button>}
+            {saveOneTask && <Button style={{
+                background: 'red',
+                color: 'white'
+            }} onClick={() => setSaveOneTask(currState => !currState)}>
+                Назад    
+            </Button>}
         </FormItem>
-    </>
+    </>)
 }

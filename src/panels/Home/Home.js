@@ -22,7 +22,7 @@ const Home = ({ id, fetchedUser }) => {
 	// </Panel>
 
 	return <Panel id={id}>
-		<PanelHeader>Example</PanelHeader>
+		<PanelHeader>Главная</PanelHeader>
 		{fetchedUser &&
 		<Group header={<Header mode="secondary">User Data Fetched with VK Bridge</Header>}>
 			<Cell

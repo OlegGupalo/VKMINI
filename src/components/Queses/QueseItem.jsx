@@ -2,6 +2,7 @@ import { Button, Card, CardGrid, ContentCard, Div, Paragraph, Title } from "@vko
 import './index.css'
 import { useRouter } from "@happysanta/router"
 import { PAGE_PRODUCT_ITEM } from "../.."
+import { useQuese } from "../../hooks/useQuese"
 
 const QuestionItem = ({
     id,

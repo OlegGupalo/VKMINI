@@ -7,12 +7,16 @@ export const useQuese = (id) => {
 
 
     useEffect(() => {
+        let isMounted = true
         async function getQuese() {
             const docRef = doc(db, "queses", id)
             const docSnap = await getDoc(docRef) 
-            setDocs(docSnap.data())
+            if(isMounted) {
+                setDocs(docSnap.data())
+            } 
         }
         getQuese()
+        return () => {isMounted = false}
     }, [id])
 
     return {docs}

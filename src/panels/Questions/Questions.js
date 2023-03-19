@@ -11,12 +11,10 @@ const Questions = ({
     const [friends, setFriends] = useState(null)
 
     useEffect(() => {
-         bridge.send('VKWebAppGetFriends', {
-            multi: true
-        })
+        bridge.send('VKWebAppGetEmail')
         .then((data) => { 
-            if (data.users) {
-                setFriends(data.users)
+            if (data.email) {
+            // Доступ к электронной почте получен
             }
         })
         .catch((error) => {

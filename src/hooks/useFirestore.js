@@ -8,13 +8,17 @@ export const useFirestore = (name) => {
 
 
     useEffect(() => {
+        let isMounted = true
         onSnapshot(query(collection(db, name), orderBy('createdAt', 'desc')), snapshot => {
             let documents = []
             snapshot.forEach(doc => {
                 documents.push({...doc.data(), id: doc.id})
             })
-            setDocs(documents)
+            if(isMounted) {
+                setDocs(documents)
+            }
         })
+        return () => {isMounted = false}
     }, [collection])
 
     return {docs}

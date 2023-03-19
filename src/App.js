@@ -39,27 +39,43 @@ const App = () => {
 			setUser(user);
 			setPopout(null);
 		}
-		fetchData();
-		bridge.send('VKWebAppShowSlidesSheet', {
-			slides: [
-			{
-				media: {
-					type: 'image',
-					blob: 'data:image/jpeg;base64,<base64-image-data>'
-				},
-				title: 'Квикз приложение',
-				subtitle: 'Приложение используется для быстрого создания и удобного прохождения собственных написанных тестов. Посоревнуйся с друзьями!'
-			}
-			]})
-			.then((data) => { 
-				if (data.result) {
-					console.log(data)
+		async function modalWindow() {
+			const modal = await bridge.send('VKWebAppShowSlidesSheet', {
+				slides: [
+				{
+					media: {
+						type: 'image',
+						blob: 'data:image/png;base64,[IMAGE_DATA]'
+					},
+					title: 'Квикз приложение',
+					subtitle: 'Приложение используется для быстрого создания и удобного прохождения собственных написанных тестов. Посоревнуйся с друзьями!'
 				}
+				]})
+				.then((data) => { 
+					if (data.result) {
+						console.log(data)
+					}
+				})
+				.catch((error) => {
+					// Ошибка
+					console.log(error);
+				});
+		}
+		fetchData();
+		modalWindow()
+		bridge.send('VKWebAppSetViewSettings', {
+			status_bar_style: 'dark',
+			action_bar_color: '#ffffff'
+			})
+			.then((data) => { 
+			  if (data.result) {
+				// Тема и цвет установлены
+			  }
 			})
 			.catch((error) => {
-				// Ошибка
-				console.log(error);
-			});
+			  // Ошибка
+			  console.log(error);
+			});	
 	}, []);
   const location = useLocation()
 	return (
@@ -98,6 +114,7 @@ const App = () => {
             <Questions id={PANEL_FRIENDS} friends={friends} />
             <Create id={PANEL_CREATE} fetchedUser={fetchedUser} />
             <QueseContainer id={PANEL_PRODUCT_ITEM} />
+			{/* <Result id={PANEL_PRODUCT_ITEM} /> */}
           </View>          
         </Root>
       </SplitCol>
