@@ -37,7 +37,6 @@ const App = () => {
 		async function fetchData() {
 			const user = await bridge.send('VKWebAppGetUserInfo');
 			setUser(user);
-			setPopout(null);
 		}
 		async function modalWindow() {
 			const modal = await bridge.send('VKWebAppShowSlidesSheet', {
@@ -76,6 +75,7 @@ const App = () => {
 			  // Ошибка
 			  console.log(error);
 			});	
+		
 	}, []);
   const location = useLocation()
 	return (
@@ -109,9 +109,8 @@ const App = () => {
           activeView={location.getViewId()}
         >
           <View id={VIEW_MAIN} activePanel={location.getViewActivePanel(VIEW_MAIN)}>
-            <Questions id={PANEL_PROFILE} go={onStoryChange} />
             <Home id={PANEL_MAIN} fetchedUser={fetchedUser} />
-            <Questions id={PANEL_FRIENDS} friends={friends} />
+            <Questions id={PANEL_FRIENDS} friends={friends} fetchedUser={fetchedUser} />
             <Create id={PANEL_CREATE} fetchedUser={fetchedUser} />
             <QueseContainer id={PANEL_PRODUCT_ITEM} />
 			{/* <Result id={PANEL_PRODUCT_ITEM} /> */}

@@ -1,27 +1,38 @@
-import { useRouter } from "@happysanta/router"
-import { 
-	View, 
-	AdaptivityProvider, 
-	AppRoot, 
-	ConfigProvider, 
-	SplitLayout, 
-	SplitCol, 
-	Epic, 
-	useAdaptivityConditionalRender, 
-	Tabbar, 
-	TabbarItem, 
-	Badge, 
-	usePlatform, 
-	Platform, 
-	PanelHeader, 
-	Panel, 
-	Group, 
-	PanelHeaderBack, 
-	Placeholder,
-  Root, 
+import {
+  View,
+  ScreenSpinner,
+  AdaptivityProvider,
+  AppRoot,
+  ConfigProvider,
+  SplitLayout,
+  SplitCol,
+  Epic,
+  useAdaptivityConditionalRender,
+  Tabbar,
+  TabbarItem,
+  Badge,
+  usePlatform,
+  Platform,
+  PanelHeader,
+  Panel,
+  Cell,
+  Group,
+  Counter,
+  PanelHeaderBack,
+  Placeholder,
+  Button
 } from '@vkontakte/vkui';
-import { PAGE_CREATE, PAGE_FRIENDS, PAGE_MAIN } from "..";
-import { Icon28Newsfeed, Icon28NewsfeedOutline } from "@vkontakte/icons";
+import {
+  Icon28AccessibilityOutline,
+  Icon28MessageOutline,
+  Icon28Newsfeed,
+  Icon28NewsfeedOutline,
+  Icon28Users,
+  Icon28WriteOutline,
+  Icon28UserOutline
+} from '@vkontakte/icons';
+import {useRouter} from '@happysanta/router';
+import {PAGE_CREATE, PAGE_FRIENDS, PAGE_MAIN, PAGE_PROFILE} from '..';
 
 const MinusWidth = ({
     viewWidth,
@@ -30,33 +41,30 @@ const MinusWidth = ({
     const router = useRouter()
 
     return (
-        <Tabbar className={viewWidth.tabletMinus.className}>
-              <TabbarItem
-                onClick={(e) => router.pushPage(PAGE_MAIN)}
-                selected={activeStory === 'home'}
-                data-story="home"
-                text="Главная"
-              >
-                <Icon28Newsfeed />
-              </TabbarItem>
-              <TabbarItem
-                onClick={(e) => router.pushPage(PAGE_FRIENDS)}
-                selected={activeStory === 'friends'}
-                data-story="friends"
-                text="Друзья"
-              >
-                <Icon28Newsfeed />
-              </TabbarItem>
-              <TabbarItem
-                  onClick={(e) => router.pushPage(PAGE_CREATE)}
-                  selected={activeStory === 'create'}
-                  data-story="create"
-                  text="Создать"
-                >
-                  <Icon28NewsfeedOutline />
-                </TabbarItem>
-        </Tabbar>
-    )
+      <Tabbar className={viewWidth.tabletMinus.className}>
+          <TabbarItem
+              onClick={(e) => router.pushPage(PAGE_MAIN)}
+              selected={activeStory === '###'}
+              data-story="home"
+              text="Главная">
+              <Icon28Newsfeed/>
+          </TabbarItem>
+          <TabbarItem
+              onClick={(e) => router.pushPage(PAGE_FRIENDS)}
+              selected={activeStory === '###'}
+              data-story="friends"
+              text="Друзья">
+              <Icon28Users/>
+          </TabbarItem>
+          <TabbarItem
+              onClick={(e) => router.pushPage(PAGE_CREATE)}
+              selected={activeStory === '###'}
+              data-story="create"
+              text="Создать">
+              <Icon28WriteOutline/>
+          </TabbarItem>
+      </Tabbar>
+  )
 }
 
 export default MinusWidth

@@ -8,7 +8,7 @@ const Queses = () => {
     return <Div>
         {docs.map(items => {
             return (
-                <Group mode="plain" key={items.id}>
+                <Group mode="plain" key={items.id} style={{marginBottom: '2rem'}}>
                     <QuestionItem {...items} imageUrl={"https://random.imagecdn.app/500/300"}/>
                 </Group>
             ) 
