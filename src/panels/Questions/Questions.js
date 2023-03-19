@@ -55,7 +55,7 @@ const Questions = ({
             <Div>
                 {friends && friends.map((frnd, key) => {
                     return <Group 
-                    style={{position: 'relative'}}
+                    style={{position: 'relative', marginBottom: '20px'}}
                     header={<Header mode="secondary">User Data Fetched with VK Bridge</Header>}>
                     <Cell
                         before={frnd.photo_200 ? <Avatar src={frnd.photo_200}/> : null}

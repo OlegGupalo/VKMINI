@@ -73,12 +73,13 @@ export const Create = () => {
       };
 
     const [activeButtonCount, setActiveButtonCount] = useState(true)
-    const condition = !(titleQuese.length > 5 && titleQuese.length < 40 && isNumber(questionCount))
+    const condition = !(titleQuese.length > 5 && titleQuese.length < 40 && isNumber(questionCount) && (otherQuest.length === Number(questionCount)))
     const createTotalQuestions = (e) => {
         setActiveCount(currState => !currState)
         setActiveButtonCount(currState => !currState)
     }
 
+    console.log("SOD", !!(otherQuest.length === Number(questionCount)), typeof(otherQuest.length), typeof(Number(questionCount)))
     const components = Array.from({ length: Number(questionCount) }).map((_, i) => {
         return <InputItemQuest 
             key={i} 
